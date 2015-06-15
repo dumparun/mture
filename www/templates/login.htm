@@ -1,0 +1,44 @@
+<ion-view view-title="Login"> <ion-header-bar
+	class="bar-positive">
+<h1 class="title">Login</h1>
+</ion-header-bar> <ion-content padding="false" scroll="true" has-bouncing="false">
+<div class="list">
+	<div class="padding-top padding-bottom main-page-logo">
+		<img src="css/images/logo.gif" />
+	</div>
+	<form name="signinForm" novalidate="" ng-submit="signIn(signinForm)">
+		<div class="row">
+			<div class="col">
+				<label class="item item-input"
+					ng-class="{ 'has-error' : signinForm.loginID.$invalid}"> <input
+					type="text" name="loginID" ng-minlength="5" ng-maxlength="10"
+					required ng-model="data.loginID" placeholder="Login ID" />
+				</label>
+				<div class="form-errors" ng-messages="signinForm.loginID.$error">
+					<div class="form-error" ng-message="maxlength">This field is
+						must be less than 10 characters</div>
+					<div class="form-error" ng-message="required">This is a
+						required field</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<label class="item item-input"
+					ng-class="{ 'has-error-lr' : signinForm.password.$invalid  && signinForm.$submitted, 'valid-lr' : signinForm.password.$valid  && signinForm.$submitted}">
+					<input type="password" ng-model="data.password" name="password"
+					ng-minlength="5" ng-maxlength="25" required placeholder="Password" />
+				</label>
+				<div class="form-errors"
+					ng-show="signinForm.password.$error && signinForm.$submitted"
+					ng-messages="signinForm.password.$error"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<button class="button button-block button-positive">Login</button>
+			</div>
+		</div>
+	</form>
+</div>
+</ion-content> </ion-view>

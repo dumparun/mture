@@ -1,0 +1,9 @@
+<ion-view view-title="Students"> 
+ <ion-header-bar
+	class="bar-positive">
+<h1 class="title">Select Your Student</h1>
+</ion-header-bar>
+<ion-content has-bouncing="false">
+<ion-list> <ion-item ng-repeat="students in studentsList"
+	href="#/studentActions"> {{students.name}} </ion-item> </ion-list>
+</ion-content> </ion-view>
