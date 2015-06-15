@@ -31,7 +31,9 @@
 				</label>
 				<div class="form-errors"
 					ng-show="signinForm.password.$error && signinForm.$submitted"
-					ng-messages="signinForm.password.$error"></div>
+					ng-messages="signinForm.password.$error">
+				<div class="form-error" ng-message="required">Please enter password to proceed</div>	
+				</div>
 			</div>
 		</div>
 		<div class="row">
