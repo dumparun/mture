@@ -6,18 +6,21 @@
 var pluginlist = [
     "com.ionic.keyboard",
     "org.apache.cordova.splashscreen",
-    "cordova-plugin-whitelist"
+    "cordova-plugin-whitelist",
+    "cordova-plugin-media-capture",
+    "cordova-plugin-file",
+    "cordova-plugin-file-transfer"
 ];
 
 // no need to configure below
 
 var fs = require('fs');
 var path = require('path');
-var sys = require('sys')
+var sys = require('sys');
 var exec = require('child_process').exec;
 
 function puts(error, stdout, stderr) {
-    sys.puts(stdout)
+    sys.puts(stdout);
 }
 
 pluginlist.forEach(function(plug) {

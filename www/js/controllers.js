@@ -26,5 +26,32 @@ angular.module('startup.controllers', [ 'startup.services' ])
 	$scope.studentsList = $rootScope.studentsList;
 })
 
-.controller('ActionsController', function($scope, $state) {
-});
+.controller(
+		'ActionsController',
+		function($scope, $rootScope, $state, $cordovaCapture, UploadService) {
+			$scope.captureImage = function() {
+				var options = {
+					limit : 1
+				};
+
+				$cordovaCapture.captureImage(options).then(
+						function(imageData) {
+							console.log(imageData);
+							UploadService.uploadFile(imageData[0].localURL)
+									.then(function(response) {
+										console.log("Response came here");
+										console.log(response);
+										$rootScope.imagebase64 = response;
+										$state.go('showImage');
+									});
+						}, function(err) {
+							console.log(err);
+						});
+			}
+
+		})
+
+.controller('ImageController', function($rootScope, $scope) {
+	console.log($rootScope.imagebase64);
+	$scope.imagebase64 = $rootScope.imagebase64;
+})

@@ -33,12 +33,18 @@ angular.module('startup', ['ionic', 'ngCordova', 'ngMessages', 'startup.controll
                 controller: 'HomeController'
             })
             
-            .state('studentActions', {
-                url: '/studentActions',
+            .state('actionItems', {
+                url: '/actionItems',
                 templateUrl: 'templates/actions.htm',
                 controller: 'ActionsController'
+            })
+            
+            .state('showImage', {
+                url: '/showImage',
+                templateUrl: 'templates/image.htm',
+                controller: 'ImageController'
             });
 
-        $urlRouterProvider.otherwise('/login');
+        $urlRouterProvider.otherwise('/actionItems');
 
     });

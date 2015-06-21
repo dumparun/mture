@@ -15,10 +15,8 @@
 					required ng-model="data.loginID" placeholder="Login ID" />
 				</label>
 				<div class="form-errors" ng-messages="signinForm.loginID.$error">
-					<div class="form-error" ng-message="maxlength">This field is
-						must be less than 10 characters</div>
-					<div class="form-error" ng-message="required">This is a
-						required field</div>
+				 <div class="form-error" ng-message="required">Please enter Login ID to proceed</div>
+				 <div ng-messages-include="templates/errors.htm"></div>
 				</div>
 			</div>
 		</div>
