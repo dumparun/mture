@@ -1,5 +1,31 @@
 angular.module('startup.services', [])
 
+.factory('PingService', function($http, $ionicLoading) {
+	return {
+		ping : function(postData) {
+			
+			 $ionicLoading.show({
+			      template: 'Pinging...'
+			    });
+			return $http({
+				url : 'http://www.dumparun.info/dev/mture/index.php/V1/Mture/ping',
+				method : "POST",
+				data : postData,
+				headers : {
+					'Content-Type' : 'application/json'
+				}
+			}).success(function(data, status, headers, config) {
+				console.log(data);
+			}).error(function(data, status, headers, config) {
+				console.log(status);
+				 
+			}).finally(function(){
+				$ionicLoading.hide();
+			});
+		},
+	}
+})
+
 .factory('LoginService', function($http, $ionicLoading) {
 	return {
 		login : function(postData) {
@@ -22,6 +48,60 @@ angular.module('startup.services', [])
 			}).finally(function(){
 				$ionicLoading.hide();
 			});
+		},
+	}
+})
+
+.factory('LocationService', function($http, $ionicLoading, $cordovaGeolocation, $q) {
+	return {
+		updateLocation : function() {
+			
+			 var deferred = $q.defer();
+			 
+			 $ionicLoading.show({
+			      template: 'Updating Location...'
+			    });
+			 
+			var posOptions = {
+					timeout : 10000,
+					enableHighAccuracy : false
+				};
+			
+				$cordovaGeolocation
+						.getCurrentPosition(posOptions)
+						.then(
+								function(position) {
+
+									var postData = {
+										"latitude" : position.coords.latitude,
+										"longitude" : position.coords.longitude
+									};
+
+									$http({
+										url : 'http://www.dumparun.info/dev/mture/index.php/V1/Mture/location',
+										method : "POST",
+										data : postData,
+										headers : {
+											'Content-Type' : 'application/json'
+										}
+									}).success(function(data, status, headers, config) {
+										console.log(data);
+										 deferred.resolve(data);
+									}).error(function(data, status, headers, config) {
+										console.log(status);
+										 deferred.resolve(status);
+										 
+									}).finally(function(){
+										$ionicLoading.hide();
+									});
+
+								}, function(err) {
+									console.log(err);
+									$ionicLoading.hide();
+									 deferred.resolve(err);
+								});
+				
+				 return deferred.promise;
 		},
 	}
 })

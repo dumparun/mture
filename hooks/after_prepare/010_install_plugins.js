@@ -9,7 +9,8 @@ var pluginlist = [
     "cordova-plugin-whitelist",
     "cordova-plugin-media-capture",
     "cordova-plugin-file",
-    "cordova-plugin-file-transfer"
+    "cordova-plugin-file-transfer",
+    "cordova-plugin-geolocation"
 ];
 
 // no need to configure below
