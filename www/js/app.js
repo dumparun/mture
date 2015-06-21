@@ -45,6 +45,6 @@ angular.module('startup', ['ionic', 'ngCordova', 'ngMessages', 'startup.controll
                 controller: 'ImageController'
             });
 
-        $urlRouterProvider.otherwise('/actionItems');
+        $urlRouterProvider.otherwise('/login');
 
     });

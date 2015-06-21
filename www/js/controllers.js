@@ -13,7 +13,12 @@ angular.module('startup.controllers', [ 'startup.services' ])
 				}
 
 				console.log($scope.data.loginID + '  ' + $scope.data.password);
-				LoginService.login().then(function(response) {
+				var postData = {
+					"loginID" : $scope.data.loginID,
+					"password" : $scope.data.password
+				};
+
+				LoginService.login(postData).then(function(response) {
 					$rootScope.studentsList = response.data.studentsList;
 					console.log($rootScope.studentsList);
 					$state.go('home');
@@ -28,7 +33,7 @@ angular.module('startup.controllers', [ 'startup.services' ])
 
 .controller(
 		'ActionsController',
-		function($scope, $rootScope, $state, $cordovaCapture, UploadService) {
+		function($scope, $rootScope, $state, $cordovaCapture, FileService) {
 			$scope.captureImage = function() {
 				var options = {
 					limit : 1
@@ -37,8 +42,8 @@ angular.module('startup.controllers', [ 'startup.services' ])
 				$cordovaCapture.captureImage(options).then(
 						function(imageData) {
 							console.log(imageData);
-							UploadService.uploadFile(imageData[0].localURL)
-									.then(function(response) {
+							FileService.readFile(imageData[0].localURL).then(
+									function(response) {
 										console.log("Response came here");
 										console.log(response);
 										$rootScope.imagebase64 = response;
@@ -51,7 +56,23 @@ angular.module('startup.controllers', [ 'startup.services' ])
 
 		})
 
-.controller('ImageController', function($rootScope, $scope) {
-	console.log($rootScope.imagebase64);
-	$scope.imagebase64 = $rootScope.imagebase64;
-})
+.controller('ImageController',
+		function($rootScope, $scope, $state, UploadService) {
+			console.log($rootScope.imagebase64);
+			$scope.uploadImage = function(form) {
+				console.log('Uploading Image');
+
+				var postData = {
+					"data" : $scope.imagebase64,
+					"comments" : $scope.imageComments,
+					"type" : "image"
+				};
+
+				UploadService.uploadData(postData).then(function(response) {
+					console.log(response);
+					console.log($rootScope.studentsList);
+					$scope.studentsList = $rootScope.studentsList;
+					$state.go('home');
+				});
+			};
+		})

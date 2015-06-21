@@ -3,10 +3,27 @@
 <h1 class="title">Select Options</h1>
 </ion-header-bar> <ion-content padding="false" scroll="false" has-bouncing="false">
 <div class="list">
-	<div class="row">
-		<div class="col">
-			<img src="{{imagebase64}}" />
+	<form name="uploadImageForm" novalidate="" ng-submit="uploadImage()">
+
+		<div class="row">
+			<div class="col">
+				<img width="100%" src="{{imagebase64}}" />
+			</div>
 		</div>
-	</div>
+		<div class="row">
+			<div class="col">
+				<label class="item item-input"> <textarea
+						placeholder="Comments About the Photo" ng-model="imageComments"
+						name="imageComments"></textarea>
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<button class="button button-block button-positive">Upload
+					Image</button>
+			</div>
+		</div>
+	</form>
 </div>
 </ion-content> </ion-view>
