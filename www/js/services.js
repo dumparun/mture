@@ -1,6 +1,6 @@
-angular.module('startup.services', [])
+angular.module('mture.services', [])
 
-.factory('PingService', function($http, $ionicLoading) {
+.factory('PingService', ['$http', '$ionicLoading', function($http, $ionicLoading) {
 	return {
 		ping : function(postData) {
 			
@@ -24,9 +24,9 @@ angular.module('startup.services', [])
 			});
 		},
 	}
-})
+}])
 
-.factory('LoginService', function($http, $ionicLoading) {
+.factory('LoginService', ['$http', '$ionicLoading', function($http, $ionicLoading) {
 	return {
 		login : function(postData) {
 			
@@ -50,9 +50,9 @@ angular.module('startup.services', [])
 			});
 		},
 	}
-})
+}])
 
-.factory('LocationService', function($http, $ionicLoading, $cordovaGeolocation, $q) {
+.factory('LocationService', ['$http', '$ionicLoading', '$cordovaGeolocation', '$q', function($http, $ionicLoading, $cordovaGeolocation, $q) {
 	return {
 		updateLocation : function() {
 			
@@ -104,10 +104,10 @@ angular.module('startup.services', [])
 				 return deferred.promise;
 		},
 	}
-})
+}])
 
 
-.factory('UploadService', function($http, $ionicLoading) {
+.factory('UploadService', ['$http', '$ionicLoading',  function($http, $ionicLoading) {
 	return {
 		uploadData : function(postData) {
 			
@@ -131,9 +131,9 @@ angular.module('startup.services', [])
 			});
 		},
 	}
-})
+}])
 
-.service('FileService', function($q, $ionicLoading) {
+.service('FileService', ['$q', '$ionicLoading', function($q, $ionicLoading) {
 
 	return{
 	readFile : function (imageURI) {
@@ -173,4 +173,4 @@ angular.module('startup.services', [])
 	    return deferred.promise;
 	},
 	}
-})
+}])
