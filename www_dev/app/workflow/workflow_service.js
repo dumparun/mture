@@ -1,4 +1,4 @@
-angular.module('mture.services', [])
+angular.module('workflowApp.service', [])
 
 .factory('PingService', ['$http', '$ionicLoading', function($http, $ionicLoading) {
 	return {
@@ -9,32 +9,6 @@ angular.module('mture.services', [])
 			    });
 			return $http({
 				url : 'http://www.dumparun.info/dev/mture/index.php/V1/Mture/ping',
-				method : "POST",
-				data : postData,
-				headers : {
-					'Content-Type' : 'application/json'
-				}
-			}).success(function(data, status, headers, config) {
-				console.log(data);
-			}).error(function(data, status, headers, config) {
-				console.log(status);
-				 
-			}).finally(function(){
-				$ionicLoading.hide();
-			});
-		},
-	}
-}])
-
-.factory('LoginService', ['$http', '$ionicLoading', function($http, $ionicLoading) {
-	return {
-		login : function(postData) {
-			
-			 $ionicLoading.show({
-			      template: 'Loading...'
-			    });
-			return $http({
-				url : 'http://www.dumparun.info/dev/mture/index.php/V1/Mture/login',
 				method : "POST",
 				data : postData,
 				headers : {

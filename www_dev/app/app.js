@@ -1,7 +1,13 @@
-angular.module('mtureapp',
-		[ 'ionic', 'ngCordova', 'ngMessages', 'mture.controllers' ])
+var mtureApp = angular.module('mtureApp', [ 'ionic', 'ngCordova', 'ngMessages',
+		'loginApp', 'homeApp', 'workflowApp' ]);
 
-.run(
+angular.module('loginApp', [ 'loginApp.controller' ]);
+
+angular.module('homeApp', [ 'homeApp.controller' ]);
+
+angular.module('workflowApp', [ 'workflowApp.controller' ]);
+
+mtureApp.run(
 		[
 				'$ionicPlatform',
 				'$cordovaSplashscreen',
@@ -32,25 +38,25 @@ angular.module('mtureapp',
 
 					.state('login', {
 						url : '/login',
-						templateUrl : 'templates/login.htm',
+						templateUrl : 'app/login/login.htm',
 						controller : 'LoginController'
 					})
 
 					.state('home', {
 						url : '/home',
-						templateUrl : 'templates/home.htm',
+						templateUrl : 'app/home/home.htm',
 						controller : 'HomeController'
 					})
 
-					.state('actionItems', {
-						url : '/actionItems',
-						templateUrl : 'templates/actions.htm',
-						controller : 'ActionsController'
+					.state('workflow', {
+						url : '/workflow',
+						templateUrl : 'app/workflow/workflow.htm',
+						controller : 'WorkflowController'
 					})
 
 					.state('showImage', {
 						url : '/showImage',
-						templateUrl : 'templates/image.htm',
+						templateUrl : 'app/workflow/image.htm',
 						controller : 'ImageController'
 					});
 
