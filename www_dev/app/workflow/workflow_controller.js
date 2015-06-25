@@ -1,99 +1,86 @@
-angular
-		.module('workflowApp.controller', [ 'workflowApp.service' ])
+angular.module('workflowApp')
 
+.controller(
+        'WorkflowController',
+        [
+                '$scope',
+                '$rootScope',
+                '$state',
+                '$cordovaCapture',
+                'FileService',
+                'PingService',
+                'LocationService',
+                function($scope, $rootScope, $state, $cordovaCapture, FileService, PingService,
+                        LocationService) {
 
-		.controller(
-				'WorkflowController',
-				[
-						'$scope',
-						'$rootScope',
-						'$state',
-						'$cordovaCapture',
-						'FileService',
-						'PingService',
-						'LocationService',
-						function($scope, $rootScope, $state, $cordovaCapture,
-								FileService, PingService, LocationService) {
+	                $scope.captureImage = function() {
 
-							$scope.captureImage = function() {
-								var options = {
-									limit : 1
-								};
+		                var options = {
+			                limit : 1
+		                };
+		                
+		                $cordovaCapture.captureImage(options).then(function(imageData) {
 
-								$cordovaCapture
-										.captureImage(options)
-										.then(
-												function(imageData) {
-													console.log(imageData);
-													FileService
-															.readFile(
-																	imageData[0].localURL)
-															.then(
-																	function(
-																			response) {
-																		console
-																				.log("Response came here");
-																		console
-																				.log(response);
-																		$rootScope.imagebase64 = response;
-																		$state
-																				.go('showImage');
-																	});
-												}, function(err) {
-													console.log(err);
-												});
-							};
+			                console.log(imageData);
+			                FileService.readFile(imageData[0].localURL).then(function(response) {
 
-							$scope.ping = function() {
+				                console.log("Response came here");
+				                console.log(response);
+				                $rootScope.imagebase64 = response;
+				                $state.go('showImage');
+			                });
+		                }, function(err) {
 
-								var postData = {};
+			                console.log(err);
+		                });
+	                };
+	                
+	                $scope.ping = function() {
 
-								PingService
-										.ping(postData)
-										.then(
-												function(response) {
-													$scope.entriesList = $rootScope.entriesList;
-													$state.go('home');
-												});
-							};
+		                var postData = {};
+		                
+		                PingService.ping(postData).then(function(response) {
 
-							$scope.captureLocation = function() {
-								LocationService
-										.updateLocation()
-										.then(
-												function(response) {
-													$scope.entriesList = $rootScope.entriesList;
-													$state.go('home');
-												});
-							};
+			                $scope.entriesList = $rootScope.entriesList;
+			                $state.go('home');
+		                });
+	                };
+	                
+	                $scope.captureLocation = function() {
 
-						} ])
+		                LocationService.updateLocation().then(function(response) {
 
-		.controller(
-				'ImageController',
-				[
-						'$rootScope',
-						'$scope',
-						'$state',
-						'UploadService',
-						function($rootScope, $scope, $state, UploadService) {
-							console.log($rootScope.imagebase64);
-							$scope.uploadImage = function(form) {
-								console.log('Uploading Image');
+			                $scope.entriesList = $rootScope.entriesList;
+			                $state.go('home');
+		                });
+	                };
+	                
+                }
+        ])
 
-								var postData = {
-									"data" : $scope.imagebase64,
-									"comments" : $scope.imageComments,
-									"type" : "image"
-								};
+.controller(
+        'ImageController',
+        [
+                '$rootScope', '$scope', '$state', 'UploadService',
+                function($rootScope, $scope, $state, UploadService) {
 
-								UploadService
-										.uploadData(postData)
-										.then(
-												function(response) {
-													console.log(response);
-													$scope.entriesList = $rootScope.entriesList;
-													$state.go('home');
-												});
-							};
-						} ])
+	                console.log($rootScope.imagebase64);
+	                $scope.uploadImage = function(form) {
+
+		                console.log('Uploading Image');
+		                
+		                var postData = {
+		                    "data" : $scope.imagebase64,
+		                    "comments" : $scope.imageComments,
+		                    "type" : "image"
+		                };
+		                
+		                UploadService.uploadData(postData).then(function(response) {
+
+			                console.log(response);
+			                $scope.entriesList = $rootScope.entriesList;
+			                $state.go('home');
+		                });
+	                };
+                }
+        ])

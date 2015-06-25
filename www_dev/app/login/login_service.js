@@ -1,4 +1,4 @@
-angular.module('loginApp.service', [])
+angular.module('loginApp')
 
 .factory('LoginService', ['$http', '$ionicLoading', function($http, $ionicLoading) {
 	return {

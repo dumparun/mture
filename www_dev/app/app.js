@@ -1,11 +1,11 @@
 var mtureApp = angular.module('mtureApp', [ 'ionic', 'ngCordova', 'ngMessages',
 		'loginApp', 'homeApp', 'workflowApp' ]);
 
-angular.module('loginApp', [ 'loginApp.controller' ]);
+angular.module('loginApp', [ ]);
 
-angular.module('homeApp', [ 'homeApp.controller' ]);
+angular.module('homeApp', []);
 
-angular.module('workflowApp', [ 'workflowApp.controller' ]);
+angular.module('workflowApp', [ ]);
 
 mtureApp.run(
 		[

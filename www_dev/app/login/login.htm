@@ -15,8 +15,9 @@
 					required ng-model="data.loginID" placeholder="Login ID" />
 				</label>
 				<div class="form-errors" ng-messages="signinForm.loginID.$error">
-				 <div class="form-error" ng-message="required">Please enter Login ID to proceed</div>
-				 <div ng-messages-include="templates/errors.htm"></div>
+					<div class="form-error" ng-message="required">Please enter
+						Login ID to proceed</div>
+					<div ng-messages-include="app/templates/errors.htm"></div>
 				</div>
 			</div>
 		</div>
@@ -30,7 +31,9 @@
 				<div class="form-errors"
 					ng-show="signinForm.password.$error && signinForm.$submitted"
 					ng-messages="signinForm.password.$error">
-				<div class="form-error" ng-message="required">Please enter password to proceed</div>	
+					<div class="form-error" ng-message="required">Please enter
+						password to proceed</div>
+					<div ng-messages-include="app/templates/errors.htm"></div>
 				</div>
 			</div>
 		</div>

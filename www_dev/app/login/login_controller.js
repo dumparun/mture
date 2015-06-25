@@ -1,4 +1,4 @@
-angular.module('loginApp.controller', [ 'loginApp.service' ])
+angular.module('loginApp')
 
 .controller(
 		'LoginController',

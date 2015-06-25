@@ -1,4 +1,4 @@
-angular.module('workflowApp.service', [])
+angular.module('workflowApp')
 
 .factory('PingService', ['$http', '$ionicLoading', function($http, $ionicLoading) {
 	return {
