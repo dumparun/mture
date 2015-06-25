@@ -1,5 +1,5 @@
 var mtureApp = angular.module('mtureApp', [
-        'ionic', 'ngCordova', 'ngMessages', 'loginApp', 'homeApp', 'workflowApp'
+        'ionic', 'ngCordova', 'ngMessages', 'loginApp', 'homeApp', 'workflowApp', 'comms'
 ]);
 
 angular.module('loginApp', []);
@@ -7,6 +7,8 @@ angular.module('loginApp', []);
 angular.module('homeApp', []);
 
 angular.module('workflowApp', []);
+
+angular.module('comms', []);
 
 mtureApp.run([
         '$ionicPlatform', '$cordovaSplashscreen', function($ionicPlatform, $cordovaSplashscreen) {
