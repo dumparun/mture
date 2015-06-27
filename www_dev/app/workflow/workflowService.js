@@ -33,8 +33,11 @@ angular.module('workflowApp')
                 '$ionicLoading',
                 '$cordovaGeolocation',
                 '$q',
-                'CommsService', 'CommsDataService', 'CommonDataService', 
-                function($http, $ionicLoading, $cordovaGeolocation, $q, CommsService, CommsDataService, CommonDataService) {
+                'CommsService',
+                'CommsDataService',
+                'CommonDataService',
+                function($http, $ionicLoading, $cordovaGeolocation, $q, CommsService,
+                        CommsDataService, CommonDataService) {
 
 	                return {
 		                updateLocation : function() {
@@ -82,20 +85,36 @@ angular.module('workflowApp')
                 }
         ])
 
-.factory('UploadService', [
-        '$http', '$ionicLoading', 'CommsService', function($http, $ionicLoading, CommsService) {
+.factory(
+        'UploadService',
+        [
+                'CommsService', 'CommsDataService', 'CommonDataService', 'ImageDataService',
+                function(CommsService, CommsDataService, CommonDataService, ImageDataService) {
 
-	        return {
-		        uploadData : function(postData) {
+	                return {
+		                uploadData : function(postData) {
 
-			        return new CommsService.communicate(postData);
-		        },
-	        }
-        }
-])
+			                var postData = {
+			                    "data" : ImageDataService.getImagebase64,
+			                    "comments" : ImageDataService.getImageComments,
+			                    "type" : "image"
+			                };
+			                
+			                commsData = new CommsDataService;
+			                commsData.setLoadingTemplate("Uploading Photos ...");
+			                commsData.setURLPath("V1/Mture/upload");
+			                commsData.setPostData(postData);
+			                return new CommsService.communicate(commsData).then(function(response) {
+
+				                CommonDataService.setStatus(response.data);
+			                });
+		                },
+	                }
+                }
+        ])
 
 .service('FileService', [
-        '$q', '$ionicLoading', function($q, $ionicLoading) {
+        '$q', '$ionicLoading', 'ImageDataService', function($q, $ionicLoading, ImageDataService) {
 
 	        return {
 		        readFile : function(imageURI) {
@@ -117,7 +136,7 @@ angular.module('workflowApp')
 
 						        console.log("Read complete!");
 						        var image64 = evt.target.result;
-						        console.log(image64);
+						        ImageDataService.setImageBase64(image64);
 						        $ionicLoading.hide();
 						        deferred.resolve(image64);
 					        };

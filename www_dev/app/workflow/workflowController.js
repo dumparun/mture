@@ -9,7 +9,8 @@ angular.module('workflowApp')
                 '$cordovaCapture',
                 'FileService',
                 'PingService',
-                'LocationService', 'CommonDataService',
+                'LocationService',
+                'CommonDataService',
                 function($scope, $rootScope, $state, $cordovaCapture, FileService, PingService,
                         LocationService, CommonDataService) {
 
@@ -39,9 +40,9 @@ angular.module('workflowApp')
 
 		                PingService.ping().then(function() {
 
-		                	if(CommonDataService.getStatus().getStatusCode() == 0){
-		                		$state.go('home');	
-		                	}
+			                if (CommonDataService.getStatus().getStatusCode() == 0) {
+				                $state.go('home');
+			                }
 		                });
 	                };
 	                
@@ -49,8 +50,9 @@ angular.module('workflowApp')
 
 		                LocationService.updateLocation().then(function(response) {
 
-			                $scope.entriesList = $rootScope.entriesList;
-			                $state.go('home');
+			                if (CommonDataService.getStatus().getStatusCode() == 0) {
+				                $state.go('home');
+			                }
 		                });
 	                };
 	                
@@ -60,25 +62,19 @@ angular.module('workflowApp')
 .controller(
         'ImageController',
         [
-                '$rootScope', '$scope', '$state', 'UploadService',
-                function($rootScope, $scope, $state, UploadService) {
+                '$scope', '$state', 'UploadService', 'CommonDataService', 'ImageDataService',
+                function($scope, $state, UploadService, CommonDataService, ImageDataService) {
 
-	                console.log($rootScope.imagebase64);
+	                $scope.imagebase64 = ImageDataService.getImageBase64();
+	                
 	                $scope.uploadImage = function(form) {
 
-		                console.log('Uploading Image');
-		                
-		                var postData = {
-		                    "data" : $scope.imagebase64,
-		                    "comments" : $scope.imageComments,
-		                    "type" : "image"
-		                };
-		                
+		                ImageDataService.setImageComments($scope.imageComments);
 		                UploadService.uploadData(postData).then(function(response) {
 
-			                console.log(response);
-			                $scope.entriesList = $rootScope.entriesList;
-			                $state.go('home');
+			                if (CommonDataService.getStatus().getStatusCode() == 0) {
+				                $state.go('home');
+			                }
 		                });
 	                };
                 }
