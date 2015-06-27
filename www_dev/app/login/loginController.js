@@ -22,8 +22,6 @@ angular.module('loginApp')
 		                LoginService.login($scope.data.loginID, $scope.data.password).then(
 		                        function() {
 
-			                        console.log(HomeDataService.getStatus().getStatusCode());
-			                        
 			                        if (HomeDataService.getStatus().getStatusCode() == 0) {
 				                        $state.go('home');
 			                        }

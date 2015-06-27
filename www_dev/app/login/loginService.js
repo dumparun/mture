@@ -1,10 +1,10 @@
 angular.module('loginApp')
 
-.factory(
+.service(
         'LoginService',
         [
-                '$http', '$ionicLoading', 'CommsService', 'CommsDataService', 'HomeDataService',
-                function($http, $ionicLoading, CommsService, CommsDataService, HomeDataService) {
+                'CommsService', 'CommsDataService', 'HomeDataService',
+                function( CommsService, CommsDataService, HomeDataService) {
 
 	                return {
 		                login : function(loginID, password) {

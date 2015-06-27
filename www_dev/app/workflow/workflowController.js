@@ -9,9 +9,9 @@ angular.module('workflowApp')
                 '$cordovaCapture',
                 'FileService',
                 'PingService',
-                'LocationService',
+                'LocationService', 'CommonDataService',
                 function($scope, $rootScope, $state, $cordovaCapture, FileService, PingService,
-                        LocationService) {
+                        LocationService, CommonDataService) {
 
 	                $scope.captureImage = function() {
 
@@ -37,12 +37,11 @@ angular.module('workflowApp')
 	                
 	                $scope.ping = function() {
 
-		                var postData = {};
-		                
-		                PingService.ping(postData).then(function(response) {
+		                PingService.ping().then(function() {
 
-			                $scope.entriesList = $rootScope.entriesList;
-			                $state.go('home');
+		                	if(CommonDataService.getStatus().getStatusCode() == 0){
+		                		$state.go('home');	
+		                	}
 		                });
 	                };
 	                

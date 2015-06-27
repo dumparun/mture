@@ -1,16 +1,30 @@
 angular.module('workflowApp')
 
-.service('PingService', [
-        'CommsService', function(CommsService) {
+.service(
+        'PingService',
+        [
+                'CommsService', 'CommsDataService', 'CommonDataService',
+                function(CommsService, CommsDataService, CommonDataService) {
 
-	        return {
-		        ping : function(postData) {
+	                return {
+		                ping : function() {
 
-			        return new CommsService.communicate(postData);
-		        },
-	        }
-        }
-])
+			                var postData = {
+				                "ping" : "ping"
+			                };
+			                
+			                commsData = new CommsDataService;
+			                commsData.setLoadingTemplate("Pinging Service ...");
+			                commsData.setURLPath("V1/Mture/ping");
+			                commsData.setPostData(postData);
+			                return new CommsService.communicate(commsData).then(function(response) {
+
+				                CommonDataService.setStatus(response.data);
+			                });
+		                },
+	                }
+                }
+        ])
 
 .factory(
         'LocationService',
@@ -19,8 +33,8 @@ angular.module('workflowApp')
                 '$ionicLoading',
                 '$cordovaGeolocation',
                 '$q',
-                'CommsService',
-                function($http, $ionicLoading, $cordovaGeolocation, $q, CommsService) {
+                'CommsService', 'CommsDataService', 'CommonDataService', 
+                function($http, $ionicLoading, $cordovaGeolocation, $q, CommsService, CommsDataService, CommonDataService) {
 
 	                return {
 		                updateLocation : function() {
@@ -43,15 +57,17 @@ angular.module('workflowApp')
 				                            "latitude" : position.coords.latitude,
 				                            "longitude" : position.coords.longitude
 				                        };
-				                        $ionicLoading.hide();
-				                        
-				                        return new CommsService.communicate(postData)
+				                        commsData = new CommsDataService;
+				                        commsData.setLoadingTemplate("Updating Location ...");
+				                        commsData.setURLPath("V1/Mture/location");
+				                        commsData.setPostData(postData);
+				                        return new CommsService.communicate(commsData)
 				                                .then(function(response) {
 
-					                                console.log(response);
-					                                $ionicLoading.hide();
+					                                CommonDataService.setStatus(response.data);
 					                                deferred.resolve(response);
 				                                });
+				                        $ionicLoading.hide();
 				                        
 			                        }, function(err) {
 
