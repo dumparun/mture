@@ -2,17 +2,18 @@ angular.module('comms')
 
 .factory('CommsService', ['$http', '$ionicLoading', function($http, $ionicLoading) {
 	return {
-		communicate : function(postData) {
+		communicate : function(commsData) {
 			
+			console.log(commsData.config());
 			 $ionicLoading.show({
-			      template: 'Pinging...'
+			      template: commsData.config().loadingTemplate
 			    });
 			return $http({
-				url : 'http://www.dumparun.info/dev/mture/index.php/V1/Mture/ping',
-				method : "POST",
-				data : postData,
+				url : commsData.config().baseURL + commsData.config().urlPath,
+				method : commsData.config().method,
+				data : commsData.config().postData,
 				headers : {
-					'Content-Type' : 'application/json'
+					'Content-Type' : commsData.config().contentType,
 				}
 			}).success(function(data, status, headers, config) {
 				console.log(data);

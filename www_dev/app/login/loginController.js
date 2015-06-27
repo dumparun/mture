@@ -1,34 +1,36 @@
 angular.module('loginApp')
 
 .controller(
-		'LoginController',
-		[
-				'$scope',
-				'$rootScope',
-				'$state',
-				'LoginService',
-				function($scope, $rootScope, $state, LoginService) {
+        'LoginController',
+        [
+                '$scope',
+                '$rootScope',
+                '$state',
+                'LoginService',
+                'HomeDataService',
+                function($scope, $rootScope, $state, LoginService, HomeDataService) {
 
-					$scope.data = {};
+	                $scope.data = {};
+	                
+	                $scope.signIn = function(form) {
 
-					$scope.signIn = function(form) {
-						console.log(form);
-						console.log('Signing In');
-						if (form.$invalid) {
-							return;
-						}
+		                console.log('Signing In');
+		                if (form.$invalid) {
+			                return;
+		                }
+		                
+		                LoginService.login($scope.data.loginID, $scope.data.password).then(
+		                        function() {
 
-						console.log($scope.data.loginID + '  '
-								+ $scope.data.password);
-						var postData = {
-							"loginID" : $scope.data.loginID,
-							"password" : $scope.data.password
-						};
-
-						LoginService.login(postData).then(function(response) {
-							$rootScope.entriesList = response.data.entriesList;
-							console.log($rootScope.entriesList);
-							$state.go('home');
-						});
-					};
-				} ]);
+			                        console.log(HomeDataService.getStatus().getStatusCode());
+			                        
+			                        if (HomeDataService.getStatus().getStatusCode() == 0) {
+				                        $state.go('home');
+			                        }
+			                        else {
+				                        $state.go('login');
+			                        }
+		                        });
+	                };
+                }
+        ]);
