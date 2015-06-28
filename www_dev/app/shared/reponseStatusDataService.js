@@ -3,7 +3,7 @@ angular.module('comms').factory('ResponseStatusDataService', function() {
 	return function() {
 
 		var status = {
-		    code : 999,
+		    code : 0,
 		    message : "Oops... This is embarrassing!! We will fix it soon",
 		};
 		

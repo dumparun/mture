@@ -22,6 +22,12 @@ angular.module('mtureApp')
 	            templateUrl : 'app/workflow/workflowView.htm',
 	            controller : 'WorkflowController'
 	        })
+	        
+	        .state('workflow?error', {
+	            url : '/workflow',
+	            templateUrl : 'app/workflow/workflowView.htm',
+	            controller : 'WorkflowController'
+	        })
 
 	        .state('showImage', {
 	            url : '/showImage',
@@ -29,7 +35,7 @@ angular.module('mtureApp')
 	            controller : 'ImageController'
 	        });
 	        
-	        $urlRouterProvider.otherwise('/login');
+	        $urlRouterProvider.otherwise('/workflow');
 	        
         }
 ],

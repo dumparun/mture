@@ -14,9 +14,14 @@ angular
 	                            link : function(scope, elem, attrs) {
 
 		                            $timeout(function() {
+
 			                            elem.remove();
 		                            }, 5000);
 		                            
+		                            elem.bind('click', function() {
+
+			                            elem.remove();
+		                            });
 	                            },
 	                        };
                         }

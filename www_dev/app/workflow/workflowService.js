@@ -22,6 +22,45 @@ angular.module('workflowApp')
 				                CommonDataService.setStatus(response.data);
 			                });
 		                },
+		                pingForError : function() {
+
+			                var postData = {
+				                "ping" : "ping"
+			                };
+			                
+			                commsData = new CommsDataService;
+			                commsData.setLoadingTemplate("Pinging Service ...");
+			                commsData.setURLPath("V1/Mture/errorping");
+			                commsData.setPostData(postData);
+			                return new CommsService.communicate(commsData).then(function(response) {
+				                CommonDataService.setStatus(response.data);
+			                })
+			                .catch(function(response) {
+			                	console.error(response);
+			                	CommonDataService.getStatus().setStatusCode(response.status);
+			                	CommonDataService.getStatus().setStatusMessage(response.statusText);
+			                });
+		                },
+		                pingForHTTPError : function() {
+
+			                var postData = {
+				                "ping" : "ping"
+			                };
+			                
+			                commsData = new CommsDataService;
+			                commsData.setLoadingTemplate("Pinging Service ...");
+			                commsData.setURLPath("V1/Mture/serviceDoesNotExist");
+			                commsData.setPostData(postData);
+			                return new CommsService.communicate(commsData).then(function(response) {
+			                	console.log(response);
+				                CommonDataService.setStatus(response.data);
+			                })
+			                .catch(function(response) {
+			                	console.error(response);
+			                	CommonDataService.getStatus().setStatusCode(response.status);
+			                	CommonDataService.getStatus().setStatusMessage(response.statusText);
+			                });
+		                },
 	                }
                 }
         ])

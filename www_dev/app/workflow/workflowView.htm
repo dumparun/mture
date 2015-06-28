@@ -2,6 +2,7 @@
 	class="bar-positive">
 <h1 class="title">Select Options</h1>
 </ion-header-bar> <ion-content padding="false" scroll="false" has-bouncing="false">
+<mt-alert> </mt-alert> 
 <div class="list">
 	<div class="row">
 		<div class="col">
@@ -19,6 +20,18 @@
 		<div class="col">
 			<button class="button button-block button-positive"
 				ng-click="captureLocation()">My Location</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<button class="button button-block button-positive"
+				ng-click="errorResponse()">Error Response</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<button class="button button-block button-positive"
+				ng-click="httpErrorResponse()">HTTP Error</button>
 		</div>
 	</div>
 </div>

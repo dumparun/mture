@@ -6,14 +6,23 @@ angular.module('workflowApp')
                 '$scope',
                 '$rootScope',
                 '$state',
+                '$ionicHistory',
                 '$cordovaCapture',
                 'FileService',
                 'PingService',
                 'LocationService',
                 'CommonDataService',
-                function($scope, $rootScope, $state, $cordovaCapture, FileService, PingService,
-                        LocationService, CommonDataService) {
+                function($scope, $rootScope, $state, $ionicHistory, $cordovaCapture, FileService,
+                        PingService, LocationService, CommonDataService) {
 
+	                console.log(CommonDataService.getStatus().getStatusCode());
+	                if (CommonDataService.getStatus().getStatusCode() != 0) {
+		                $scope.alert = {};
+		                $scope.alert.type = "error";
+		                $scope.alert.message = CommonDataService.getStatus().getStatusMessage();
+		                CommonDataService.getStatus().setStatusCode(0);
+	                }
+	                
 	                $scope.captureImage = function() {
 
 		                var options = {
@@ -52,6 +61,32 @@ angular.module('workflowApp')
 
 			                if (CommonDataService.getStatus().getStatusCode() == 0) {
 				                $state.go('home');
+			                }
+		                });
+	                };
+	                
+	                $scope.errorResponse = function() {
+
+		                PingService.pingForError().then(function() {
+
+			                if (CommonDataService.getStatus().getStatusCode() == 0) {
+				                $state.go('home');
+			                }
+			                else {
+				                $state.go('workflow?error');
+			                }
+		                });
+	                };
+	                
+	                $scope.httpErrorResponse = function() {
+
+		                PingService.pingForHTTPError().then(function() {
+
+			                if (CommonDataService.getStatus().getStatusCode() == 0) {
+				                $state.go('home');
+			                }
+			                else {
+				                $state.go('workflow?error');
 			                }
 		                });
 	                };
