@@ -1,0 +1,61 @@
+/** Styling for the username field **/
+label.item.has-error {
+	border-bottom: 2px solid red;
+}
+
+/** Styling for the password field when an error exists**/
+label.item.has-error-lr {
+	border-left: 2px solid red;
+	border-right: 2px solid red;
+}
+
+/** Styling for the password field when an error has been resolved**/
+label.item.valid-lr {
+	border-left: 2px solid green;
+	border-right: 2px solid green;
+}
+
+/** Styling for the error text and container **/
+.form-errors {
+	margin: 5px 0
+}
+
+.form-error {
+	padding: 2px 0 2px 16px;
+	color: red;
+}
+
+/** 
+* Styles for messages, like error/warning/success/info
+**/
+.info, .success, .warning, .error, .validation {
+	border: 1px solid;
+	padding: 15px 10px 15px 50px;
+	position: relative;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+}
+
+.info {
+	color: #00529B;
+	background-color: #BDE5F8;
+	background-image: url('images/info.png');
+}
+
+.success {
+	color: #4F8A10;
+	background-color: #DFF2BF;
+	background-image: url('images/success.png');
+}
+
+.warning {
+	color: #9F6000;
+	background-color: #FEEFB3;
+	background-image: url('images/warning.png');
+}
+
+.error {
+	color: #D8000C;
+	background-color: #FFBABA;
+	background-image: url('images/error.png');
+}
