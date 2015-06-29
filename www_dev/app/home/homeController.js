@@ -6,7 +6,7 @@ angular.module('homeApp')
         	if(HomeDataService.getStatus().getStatusCode() == 0){
         		$scope.alert = {};
                 $scope.alert.type = "success";
-                $scope.alert.message = "Successful Login";
+                $scope.alert.message = HomeDataService.getStatus().getStatusMessage();
         	}
 	        $scope.entriesList = HomeDataService.getEntryList();
         }

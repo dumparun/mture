@@ -18,7 +18,6 @@ angular
                                 FileService, PingService, LocationService, CommonDataService,
                                 ImageDataService) {
 
-	                        console.log(CommonDataService.getStatus().getStatusCode());
 	                        if (CommonDataService.getStatus().getStatusCode() != 0) {
 		                        $scope.alert = {};
 		                        $scope.alert.type = "error";
@@ -53,22 +52,38 @@ angular
 	                        
 	                        $scope.ping = function() {
 
-		                        PingService.ping().then(function() {
+		                        PingService.ping()
+		                                .then(
+		                                        function() {
 
-			                        if (CommonDataService.getStatus().getStatusCode() == 0) {
-				                        $state.go('home');
-			                        }
-		                        });
+			                                        if (CommonDataService.getStatus()
+			                                                .getStatusCode() == 0) {
+				                                        HomeDataService.getStatus()
+				                                                .setStatusCode(0)
+
+				                                        HomeDataService.getStatus()
+				                                                .setStatusMessage("Successfull");
+				                                        $state.go('home');
+			                                        }
+		                                        });
 	                        };
 	                        
 	                        $scope.captureLocation = function() {
 
-		                        LocationService.updateLocation().then(function(response) {
+		                        LocationService.updateLocation()
+		                                .then(
+		                                        function(response) {
 
-			                        if (CommonDataService.getStatus().getStatusCode() == 0) {
-				                        $state.go('home');
-			                        }
-		                        });
+			                                        if (CommonDataService.getStatus()
+			                                                .getStatusCode() == 0) {
+				                                        HomeDataService.getStatus()
+				                                                .setStatusCode(0)
+
+				                                        HomeDataService.getStatus()
+				                                                .setStatusMessage("Location Updated Succesfully");
+				                                        $state.go('home');
+			                                        }
+		                                        });
 	                        };
 	                        
 	                        $scope.errorResponse = function() {
@@ -79,7 +94,7 @@ angular
 				                        $state.go('home');
 			                        }
 			                        else {
-			                        	$state.go($state.current.name, {}, {
+				                        $state.go($state.current.name, {}, {
 					                        reload : true
 				                        });
 			                        }

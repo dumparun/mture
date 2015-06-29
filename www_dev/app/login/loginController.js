@@ -12,6 +12,13 @@ angular.module('loginApp')
 
 	                $scope.data = {};
 	                
+	                if (HomeDataService.getStatus().getStatusCode() != 0) {
+		                $scope.alert = {};
+		                $scope.alert.type = "error";
+		                $scope.alert.message = HomeDataService.getStatus().getStatusMessage();
+		                HomeDataService.getStatus().setStatusCode(0);
+	                }
+	                
 	                $scope.signIn = function(form) {
 
 		                console.log('Signing In');
@@ -26,7 +33,9 @@ angular.module('loginApp')
 				                        $state.go('home');
 			                        }
 			                        else {
-				                        $state.go('login');
+				                        $state.go($state.current.name, {}, {
+					                        reload : true
+				                        });
 			                        }
 		                        });
 	                };
