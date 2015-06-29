@@ -41,7 +41,7 @@ angular.module('mtureApp')
 	            controller : 'ImageController'
 	        });
 	        
-	        $urlRouterProvider.otherwise('/workflow');
+	        $urlRouterProvider.otherwise('/login');
 	        
         }
 ],
