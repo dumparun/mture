@@ -131,11 +131,11 @@ angular.module('workflowApp')
                 function(CommsService, CommsDataService, CommonDataService, ImageDataService) {
 
 	                return {
-		                uploadData : function(postData) {
+		                uploadData : function() {
 
 			                var postData = {
-			                    "data" : ImageDataService.getImagebase64,
-			                    "comments" : ImageDataService.getImageComments,
+			                    "data" : ImageDataService.getImageBase64(),
+			                    "comments" : ImageDataService.getImageComments(),
 			                    "type" : "image"
 			                };
 			                
@@ -146,54 +146,13 @@ angular.module('workflowApp')
 			                return new CommsService.communicate(commsData).then(function(response) {
 
 				                CommonDataService.setStatus(response.data);
+			                })
+			                .catch(function(response) {
+			                	console.error(response);
+			                	CommonDataService.getStatus().setStatusCode(900);
+			                	CommonDataService.getStatus().setStatusMessage("This is embarassing !!! Could you please trying till it succeeds :D :D");
 			                });
 		                },
 	                }
                 }
         ])
-
-.service('FileService', [
-        '$q', '$ionicLoading', 'ImageDataService', function($q, $ionicLoading, ImageDataService) {
-
-	        return {
-		        readFile : function(imageURI) {
-
-			        $ionicLoading.show({
-				        template : 'Processing Image...'
-			        });
-			        
-			        var deferred = $q.defer();
-			        
-			        var gotFileEntry = function(fileEntry) {
-
-				        console.log("got image file entry: " + fileEntry.fullPath);
-				        
-				        fileEntry.file(function(file) {
-
-					        var reader = new FileReader();
-					        reader.onloadend = function(evt) {
-
-						        console.log("Read complete!");
-						        var image64 = evt.target.result;
-						        ImageDataService.setImageBase64(image64);
-						        $ionicLoading.hide();
-						        deferred.resolve(image64);
-					        };
-					        reader.readAsDataURL(file);
-				        }, fsFail);
-				        
-			        };
-			        
-			        function fsFail(evt) {
-
-				        console.log(evt);
-				        $ionicLoading.hide();
-				        deferred.resolve(evt);
-			        }
-			        window.resolveLocalFileSystemURL(imageURI, gotFileEntry, fsFail);
-			        
-			        return deferred.promise;
-		        },
-	        }
-        }
-])

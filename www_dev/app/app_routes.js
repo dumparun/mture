@@ -33,6 +33,12 @@ angular.module('mtureApp')
 	            url : '/showImage',
 	            templateUrl : 'app/workflow/imageView.htm',
 	            controller : 'ImageController'
+	        })
+	       
+	        .state('showImage?error', {
+	            url : '/showImage',
+	            templateUrl : 'app/workflow/imageView.htm',
+	            controller : 'ImageController'
 	        });
 	        
 	        $urlRouterProvider.otherwise('/workflow');

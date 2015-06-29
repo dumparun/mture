@@ -1,116 +1,163 @@
-angular.module('workflowApp')
+angular
+		.module('workflowApp')
 
-.controller(
-        'WorkflowController',
-        [
-                '$scope',
-                '$rootScope',
-                '$state',
-                '$ionicHistory',
-                '$cordovaCapture',
-                'FileService',
-                'PingService',
-                'LocationService',
-                'CommonDataService',
-                function($scope, $rootScope, $state, $ionicHistory, $cordovaCapture, FileService,
-                        PingService, LocationService, CommonDataService) {
+		.controller(
+				'WorkflowController',
+				[
+						'$scope',
+						'$rootScope',
+						'$state',
+						'$ionicHistory',
+						'$cordovaCapture',
+						'FileService',
+						'PingService',
+						'LocationService',
+						'CommonDataService',
+						'ImageDataService',
+						function($scope, $rootScope, $state, $ionicHistory,
+								$cordovaCapture, FileService, PingService,
+								LocationService, CommonDataService,
+								ImageDataService) {
 
-	                console.log(CommonDataService.getStatus().getStatusCode());
-	                if (CommonDataService.getStatus().getStatusCode() != 0) {
-		                $scope.alert = {};
-		                $scope.alert.type = "error";
-		                $scope.alert.message = CommonDataService.getStatus().getStatusMessage();
-		                CommonDataService.getStatus().setStatusCode(0);
-	                }
-	                
-	                $scope.captureImage = function() {
+							console.log(CommonDataService.getStatus()
+									.getStatusCode());
+							if (CommonDataService.getStatus().getStatusCode() != 0) {
+								$scope.alert = {};
+								$scope.alert.type = "error";
+								$scope.alert.message = CommonDataService
+										.getStatus().getStatusMessage();
+								CommonDataService.getStatus().setStatusCode(0);
+							}
 
-		                var options = {
-			                limit : 1
-		                };
-		                
-		                $cordovaCapture.captureImage(options).then(function(imageData) {
+							$scope.captureImage = function() {
 
-			                console.log(imageData);
-			                FileService.readFile(imageData[0].localURL).then(function(response) {
+								var options = {
+									limit : 1
+								};
 
-				                console.log("Response came here");
-				                console.log(response);
-				                $rootScope.imagebase64 = response;
-				                $state.go('showImage');
-			                });
-		                }, function(err) {
+								$cordovaCapture
+										.captureImage(options)
+										.then(
+												function(imageData) {
 
-			                console.log(err);
-		                });
-	                };
-	                
-	                $scope.ping = function() {
+													console.log(imageData);
+													FileService
+															.readFile(
+																	imageData[0].localURL)
+															.then(
+																	function(
+																			response) {
 
-		                PingService.ping().then(function() {
+																		console
+																				.log("Response came here");
+																		console
+																				.log(response);
+																		ImageDataService
+																				.setImageBase64(response);
+																		$state
+																				.go('showImage');
+																	});
+												}, function(err) {
 
-			                if (CommonDataService.getStatus().getStatusCode() == 0) {
-				                $state.go('home');
-			                }
-		                });
-	                };
-	                
-	                $scope.captureLocation = function() {
+													console.log(err);
+												});
+							};
 
-		                LocationService.updateLocation().then(function(response) {
+							$scope.ping = function() {
 
-			                if (CommonDataService.getStatus().getStatusCode() == 0) {
-				                $state.go('home');
-			                }
-		                });
-	                };
-	                
-	                $scope.errorResponse = function() {
+								PingService.ping().then(
+										function() {
 
-		                PingService.pingForError().then(function() {
+											if (CommonDataService.getStatus()
+													.getStatusCode() == 0) {
+												$state.go('home');
+											}
+										});
+							};
 
-			                if (CommonDataService.getStatus().getStatusCode() == 0) {
-				                $state.go('home');
-			                }
-			                else {
-				                $state.go('workflow?error');
-			                }
-		                });
-	                };
-	                
-	                $scope.httpErrorResponse = function() {
+							$scope.captureLocation = function() {
 
-		                PingService.pingForHTTPError().then(function() {
+								LocationService.updateLocation().then(
+										function(response) {
 
-			                if (CommonDataService.getStatus().getStatusCode() == 0) {
-				                $state.go('home');
-			                }
-			                else {
-				                $state.go('workflow?error');
-			                }
-		                });
-	                };
-	                
-                }
-        ])
+											if (CommonDataService.getStatus()
+													.getStatusCode() == 0) {
+												$state.go('home');
+											}
+										});
+							};
 
-.controller(
-        'ImageController',
-        [
-                '$scope', '$state', 'UploadService', 'CommonDataService', 'ImageDataService',
-                function($scope, $state, UploadService, CommonDataService, ImageDataService) {
+							$scope.errorResponse = function() {
 
-	                $scope.imagebase64 = ImageDataService.getImageBase64();
-	                
-	                $scope.uploadImage = function(form) {
+								PingService.pingForError().then(
+										function() {
 
-		                ImageDataService.setImageComments($scope.imageComments);
-		                UploadService.uploadData(postData).then(function(response) {
+											if (CommonDataService.getStatus()
+													.getStatusCode() == 0) {
+												$state.go('home');
+											} else {
+												$state.go('workflow?error');
+											}
+										});
+							};
 
-			                if (CommonDataService.getStatus().getStatusCode() == 0) {
-				                $state.go('home');
-			                }
-		                });
-	                };
-                }
-        ])
+							$scope.httpErrorResponse = function() {
+
+								PingService.pingForHTTPError().then(
+										function() {
+
+											if (CommonDataService.getStatus()
+													.getStatusCode() == 0) {
+												$state.go('home');
+											} else {
+												$state.go('workflow?error');
+											}
+										});
+							};
+
+						} ])
+
+		.controller(
+				'ImageController',
+				[
+						'$scope',
+						'$state',
+						'UploadService',
+						'CommonDataService',
+						'ImageDataService',
+						function($scope, $state, UploadService,
+								CommonDataService, ImageDataService) {
+
+							if (CommonDataService.getStatus().getStatusCode() != 0) {
+								$scope.alert = {};
+								$scope.alert.type = "error";
+								$scope.alert.message = CommonDataService
+										.getStatus().getStatusMessage();
+								CommonDataService.getStatus().setStatusCode(0);
+							}
+
+							$scope.imagebase64 = ImageDataService
+									.getImageBase64();
+
+							$scope.uploadImage = function(form) {
+
+								ImageDataService
+										.setImageComments($scope.imageComments);
+								UploadService
+										.uploadData()
+										.then(
+												function(response) {
+
+													if (CommonDataService
+															.getStatus()
+															.getStatusCode() == 0) {
+														$scope.alert = {};
+														$scope.alert.type = "success";
+														$scope.alert.message = "Your Photo has been uploaded succesfully!!!";
+														$state.go('home');
+													}else{
+														$state.go('showImage?error');
+													}
+												});
+							};
+						} ])
