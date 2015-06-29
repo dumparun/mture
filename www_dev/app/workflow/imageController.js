@@ -37,7 +37,9 @@ angular
 				                                        $state.go('home');
 			                                        }
 			                                        else {
-				                                        $state.go('showImage?error');
+			                                        	$state.go($state.current.name, {}, {
+			    					                        reload : true
+			    				                        });
 			                                        }
 		                                        });
 	                        };
