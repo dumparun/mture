@@ -28,8 +28,7 @@ mtureApp.run([
 			        StatusBar.styleDefault();
 		        }
 		        setTimeout(function() {
-
-			        $cordovaSplashscreen.hide()
+			        $cordovaSplashscreen.hide();
 		        }, 3000)
 	        });
         }

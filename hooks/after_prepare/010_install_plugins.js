@@ -10,7 +10,8 @@ var pluginlist = [
     "cordova-plugin-media-capture",
     "cordova-plugin-file",
     "cordova-plugin-file-transfer",
-    "cordova-plugin-geolocation"
+    "cordova-plugin-geolocation",
+    "org.apache.cordova.statusbar"
 ];
 
 // no need to configure below
