@@ -5,7 +5,6 @@ angular
                 'WorkflowController',
                 [
                         '$scope',
-                        '$rootScope',
                         '$state',
                         '$ionicHistory',
                         '$cordovaCapture',
@@ -14,9 +13,10 @@ angular
                         'LocationService',
                         'CommonDataService',
                         'ImageDataService',
-                        function($scope, $rootScope, $state, $ionicHistory, $cordovaCapture,
+                        'HomeDataService',
+                        function($scope, $state, $ionicHistory, $cordovaCapture,
                                 FileService, PingService, LocationService, CommonDataService,
-                                ImageDataService) {
+                                ImageDataService, HomeDataService) {
 
 	                        if (CommonDataService.getStatus().getStatusCode() != 0) {
 		                        $scope.alert = {};
