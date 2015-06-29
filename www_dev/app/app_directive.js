@@ -5,7 +5,8 @@ angular
                 'mtAlert',
                 [
                         '$timeout',
-                        function($timeout) {
+                        '$document',
+                        function($timeout, $document) {
 
 	                        return {
 	                            restrict : 'AE',
@@ -18,7 +19,7 @@ angular
 			                            elem.remove();
 		                            }, 5000);
 		                            
-		                            elem.bind('click', function() {
+		                            $document.bind('click', function() {
 
 			                            elem.remove();
 		                            });
