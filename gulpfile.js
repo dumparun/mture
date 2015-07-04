@@ -25,6 +25,7 @@ var paths = {
     indexHTML : './www_dev/index.html',
     appDest : './www/app',
     cssDest : './www/css',
+    i18nSrc : './www_dev/app/**/*',
 };
 
 var libsPath = {
@@ -66,7 +67,8 @@ gulp.task('copyAllFiles', function() {
 	var copyTemplates = gulp.src(paths.templates).pipe(gulp.dest(paths.appDest));
 	var copyCommonTemplates = gulp.src(paths.commonTemplates).pipe(gulp.dest(paths.appDest));
 	var copyIndexHTML = gulp.src(paths.indexHTML).pipe(gulp.dest(paths.dest));
-	return mergeStream(copyCSS, copyTemplates, copyIndexHTML);
+	var copyI18N = gulp.src(paths.i18nSrc).pipe(gulp.dest(paths.appDest));
+	return mergeStream(copyCSS, copyTemplates, copyIndexHTML, copyI18N);
 	
 });
 
