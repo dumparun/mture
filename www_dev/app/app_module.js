@@ -1,5 +1,6 @@
 var mtureApp = angular.module('mtureApp', [
-        'ionic', 'ngCordova', 'ngMessages', 'loginApp', 'homeApp', 'workflowApp', 'comms', 'file'
+        'ionic', 'ngCordova', 'ngMessages', 'pascalprecht.translate', 'loginApp', 'homeApp',
+        'workflowApp', 'comms', 'file'
 ]);
 
 angular.module('loginApp', []);
@@ -11,6 +12,22 @@ angular.module('workflowApp', []);
 angular.module('comms', []);
 
 angular.module('file', []);
+
+angular.module('mtureApp')
+
+mtureApp.config([
+        '$translateProvider', function($translateProvider) {
+
+	        $translateProvider.useStaticFilesLoader({
+	            prefix : 'app/i18n/locale-',
+	            suffix : '.json'
+	        });
+	        // Tell the module what language to use by default
+	        $translateProvider.preferredLanguage('en_US');
+	        
+	        $translateProvider.useSanitizeValueStrategy('sanitize');
+        }
+]);
 
 mtureApp.run([
         '$ionicPlatform', '$cordovaSplashscreen', function($ionicPlatform, $cordovaSplashscreen) {
@@ -28,6 +45,7 @@ mtureApp.run([
 			        StatusBar.styleDefault();
 		        }
 		        setTimeout(function() {
+
 			        $cordovaSplashscreen.hide();
 		        }, 3000)
 	        });

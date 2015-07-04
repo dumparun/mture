@@ -1,163 +1,121 @@
-angular
-        .module('workflowApp')
-        
-        .controller(
-                'WorkflowController',
-                [
-                        '$scope',
-                        '$state',
-                        '$ionicHistory',
-                        '$cordovaCapture',
-                        'FileService',
-                        'PingService',
-                        'LocationService',
-                        'CommonDataService',
-                        'ImageDataService',
-                        'HomeDataService',
-                        function($scope, $state, $ionicHistory, $cordovaCapture,
-                                FileService, PingService, LocationService, CommonDataService,
-                                ImageDataService, HomeDataService) {
+angular.module('workflowApp')
 
-	                        if (CommonDataService.getStatus().getStatusCode() != 0) {
-		                        $scope.alert = {};
-		                        $scope.alert.type = "error";
-		                        $scope.alert.message = CommonDataService.getStatus()
-		                                .getStatusMessage();
-		                        CommonDataService.getStatus().setStatusCode(0);
-	                        }
-	                        
-	                        $scope.captureImage = function() {
+.controller(
+        'WorkflowController',
+        [
+                '$scope',
+                '$state',
+                '$ionicHistory',
+                '$cordovaCapture',
+                '$translate',
+                'FileService',
+                'PingService',
+                'LocationService',
+                'CommonDataService',
+                'ImageDataService',
+                'HomeDataService',
+                function($scope, $state, $ionicHistory, $cordovaCapture, $translate, FileService,
+                        PingService, LocationService, CommonDataService, ImageDataService,
+                        HomeDataService) {
 
-		                        var options = {
-			                        limit : 1
-		                        };
-		                        
-		                        $cordovaCapture.captureImage(options).then(
-		                                function(imageData) {
+	                $scope.languageKey = 'en_US';
+	                
+	                if (CommonDataService.getStatus().getStatusCode() != 0) {
+		                $scope.alert = {};
+		                $scope.alert.type = "error";
+		                $scope.alert.message = CommonDataService.getStatus().getStatusMessage();
+		                CommonDataService.getStatus().setStatusCode(0);
+	                }
+	                
+	                $scope.captureImage = function() {
 
-			                                console.log(imageData);
-			                                FileService.readFile(imageData[0].localURL).then(
-			                                        function(response) {
+		                var options = {
+			                limit : 1
+		                };
+		                
+		                $cordovaCapture.captureImage(options).then(function(imageData) {
 
-				                                        console.log("Response came here");
-				                                        console.log(response);
-				                                        ImageDataService.setImageBase64(response);
-				                                        $state.go('showImage');
-			                                        });
-		                                }, function(err) {
+			                console.log(imageData);
+			                FileService.readFile(imageData[0].localURL).then(function(response) {
 
-			                                console.log(err);
-		                                });
-	                        };
-	                        
-	                        $scope.ping = function() {
+				                console.log("Response came here");
+				                console.log(response);
+				                ImageDataService.setImageBase64(response);
+				                $state.go('showImage');
+			                });
+		                }, function(err) {
 
-		                        PingService.ping()
-		                                .then(
-		                                        function() {
+			                console.log(err);
+		                });
+	                };
+	                
+	                $scope.ping = function() {
 
-			                                        if (CommonDataService.getStatus()
-			                                                .getStatusCode() == 0) {
-				                                        HomeDataService.getStatus()
-				                                                .setStatusCode(0)
+		                PingService.ping().then(function() {
 
-				                                        HomeDataService.getStatus()
-				                                                .setStatusMessage("Successfull");
-				                                        $state.go('home');
-			                                        }
-		                                        });
-	                        };
-	                        
-	                        $scope.captureLocation = function() {
+			                if (CommonDataService.getStatus().getStatusCode() == 0) {
+				                HomeDataService.getStatus().setStatusCode(0)
 
-		                        LocationService.updateLocation()
-		                                .then(
-		                                        function(response) {
+				                HomeDataService.getStatus().setStatusMessage("Successfull");
+				                $state.go('home');
+			                }
+		                });
+	                };
+	                
+	                $scope.captureLocation = function() {
 
-			                                        if (CommonDataService.getStatus()
-			                                                .getStatusCode() == 0) {
-				                                        HomeDataService.getStatus()
-				                                                .setStatusCode(0)
-
-				                                        HomeDataService.getStatus()
-				                                                .setStatusMessage("Location Updated Succesfully");
-				                                        $state.go('home');
-			                                        }
-		                                        });
-	                        };
-	                        
-	                        $scope.errorResponse = function() {
-
-		                        PingService.pingForError().then(function() {
+		                LocationService.updateLocation().then(
+		                        function(response) {
 
 			                        if (CommonDataService.getStatus().getStatusCode() == 0) {
+				                        HomeDataService.getStatus().setStatusCode(0)
+
+				                        HomeDataService.getStatus().setStatusMessage(
+				                                "Location Updated Succesfully");
 				                        $state.go('home');
 			                        }
-			                        else {
-				                        $state.go($state.current.name, {}, {
-					                        reload : true
-				                        });
-			                        }
 		                        });
-	                        };
-	                        
-	                        $scope.httpErrorResponse = function() {
+	                };
+	                
+	                $scope.errorResponse = function() {
 
-		                        PingService.pingForHTTPError().then(function() {
+		                PingService.pingForError().then(function() {
 
-			                        if (CommonDataService.getStatus().getStatusCode() == 0) {
-				                        $state.go('home');
-			                        }
-			                        else {
-				                        $state.go($state.current.name, {}, {
-					                        reload : true
-				                        });
-			                        }
-		                        });
-	                        };
-	                        
-                        }
-                ])
-        
-        .controller(
-                'ImageController',
-                [
-                        '$scope',
-                        '$state',
-                        'UploadService',
-                        'CommonDataService',
-                        'ImageDataService',
-                        function($scope, $state, UploadService, CommonDataService, ImageDataService) {
+			                if (CommonDataService.getStatus().getStatusCode() == 0) {
+				                $state.go('home');
+			                }
+			                else {
+				                $state.go($state.current.name, {}, {
+					                reload : true
+				                });
+			                }
+		                });
+	                };
+	                
+	                $scope.httpErrorResponse = function() {
 
-	                        if (CommonDataService.getStatus().getStatusCode() != 0) {
-		                        $scope.alert = {};
-		                        $scope.alert.type = "error";
-		                        $scope.alert.message = CommonDataService.getStatus()
-		                                .getStatusMessage();
-		                        CommonDataService.getStatus().setStatusCode(0);
-	                        }
-	                        
-	                        $scope.imagebase64 = ImageDataService.getImageBase64();
-	                        
-	                        $scope.uploadImage = function(form) {
+		                PingService.pingForHTTPError().then(function() {
 
-		                        ImageDataService.setImageComments($scope.imageComments);
-		                        UploadService
-		                                .uploadData()
-		                                .then(
-		                                        function(response) {
+			                if (CommonDataService.getStatus().getStatusCode() == 0) {
+				                $state.go('home');
+			                }
+			                else {
+				                $state.go($state.current.name, {}, {
+					                reload : true
+				                });
+			                }
+		                });
+	                };
+	                
+	                $scope.changeLanguage = function() {
 
-			                                        if (CommonDataService.getStatus()
-			                                                .getStatusCode() == 0) {
-				                                        $scope.alert = {};
-				                                        $scope.alert.type = "success";
-				                                        $scope.alert.message = "Your Photo has been uploaded succesfully!!!";
-				                                        $state.go('home');
-			                                        }
-			                                        else {
-				                                        $state.go('showImage?error');
-			                                        }
-		                                        });
-	                        };
-                        }
-                ])
+		                $scope.languageKey = angular.equals($scope.languageKey, 'en_US')
+		                        ? 'ml_ML'
+		                        : 'en_US';
+		                
+		                $translate.use($scope.languageKey);
+		                
+	                };
+	                
+                }
+        ]);
