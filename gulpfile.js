@@ -32,7 +32,9 @@ var libsPath = {
     ionicBundle : 'lib/ionic/js/ionic.bundle.js',
     angularResouce : 'lib/ionic/js/angular/angular-resource.min.js',
     angularMessage : 'lib/ionic/js/angular/angular-messages.min.js',
-    ngCordova : 'lib/ngCordova/ng-cordova.min.js'
+    ngCordova : 'lib/ngCordova/ng-cordova.min.js',
+    angularTranslate : 'lib/angulartranslate/angular-translate.min.js',
+    angularTranslateStatic : 'lib/angulartranslate/angular-translate-loader-static-files.min.js',
 }
 
 gulp.task('default', [
