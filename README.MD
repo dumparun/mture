@@ -12,7 +12,7 @@ The difference between a tutorial/hello world application and a real project is 
 >This project is intented to put those missing pieces together as time goes on, add more and more best practices in places and present you with a boiler plate code, which can be used to build applications. This can be called as a bootstrap/bootloader to keep you running and work on business cases from day onw.
 
 Now, there is another selfish interest behind this, 
-> "I want to learn new frameworks, languages"
+> "I want to learn new frameworks, languages and yes, its fun"
 
 #What is in? 
 Here i am trying to put up some flows together, which is used in general on most of the projects.
