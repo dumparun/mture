@@ -1,4 +1,4 @@
-> Documentation is work in progress </i>
+> Documentation is work in progress
 
 # MTURE - Angular Ionic boiler plate
 
